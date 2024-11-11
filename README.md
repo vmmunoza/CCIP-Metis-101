@@ -30,29 +30,40 @@ Think of CCIP as a courier service for blockchain transactions. When you send a 
    - If it’s a token transfer, the Executing DON handles minting or releasing tokens to the recipient. If it’s data, it calls a specific function (like `ccipReceive`) on the receiving contract to deliver the message.
    - The whole process is atomic, meaning either everything completes successfully, or the transaction fails and reverts if an error occurs.
 
+
 ---
 
 ### Key Concepts and Terms in CCIP
 
-**Router Contract:** The main smart contract users interact with to start cross-chain transactions. It’s like the control center for sending tokens or messages between chains.
+**Router Contract:** The main contract that users interact with to send cross-chain transactions. It manages and directs the transfer of tokens and messages to their correct destinations across different chains.
 
-**Committing DON (Decentralized Oracle Network):** A group of oracles that monitor the source blockchain, collect and group transactions, and produce a Merkle Root to record them on the destination chain.
+**Committing DON (Decentralized Oracle Network):** A network of oracles that watches for new transactions on the source blockchain, collects these transactions, and generates a Merkle Root. The Committing DON records this root on the destination blockchain to ensure all transactions are securely represented.
 
-**Executing DON:** Another oracle network responsible for finalizing transactions on the destination chain after verification. It “unlocks” the tokens or triggers actions on the target blockchain.
+**Executing DON:** Another oracle network responsible for finalizing transactions on the destination chain once validated by the Risk Management Network. This network performs the actual token transfer or message delivery on the target blockchain.
 
-**Risk Management Network:** An additional layer of security that verifies transaction batches for integrity and can pause CCIP if risks are detected. This is essential for maintaining trust and security across chains.
+**Risk Management Network:** An independent security layer that verifies the Merkle Root committed by the Committing DON. If there’s any inconsistency or risk, this network can pause CCIP operations to prevent potentially harmful cross-chain actions.
 
-**Finality:** The point where a transaction is highly unlikely to change on the blockchain, making it reliable for cross-chain transfers. It helps ensure that transactions don’t get reverted after they’ve been committed.
+**Finality:** The point where a transaction on the blockchain becomes irreversible or extremely unlikely to change. Achieving finality is essential for ensuring that cross-chain transactions are secure and trustworthy.
 
-**Merkle Root:** A cryptographic representation of a batch of transactions. Think of it as a “summary” of all transactions that’s easy to verify without looking at each transaction individually.
+**Merkle Root:** A cryptographic summary of a batch of transactions. The Merkle Root allows for efficient verification of all transactions in the batch without checking each one individually. This helps ensure the integrity of transaction data when transferring between chains.
 
-**Token Pools:** Smart contracts that manage tokens for cross-chain transfers. They’re responsible for holding, minting, burning, and releasing tokens securely across different blockchains.
+**Token Pools:** Smart contracts that manage tokens used in cross-chain transfers. They handle the locking, minting, burning, and unlocking of tokens across chains, adding a layer of security by rate-limiting transfers to protect against malicious activity.
 
-**OnRamp and OffRamp:** These contracts handle the start (OnRamp) and end (OffRamp) of a transaction on the CCIP network, ensuring tokens and data move smoothly across chains.
+**OnRamp and OffRamp:** Specialized contracts that handle transactions as they enter (OnRamp) and exit (OffRamp) the CCIP system. They facilitate smooth token and message transfers between blockchains by preparing transactions on the source chain and finalizing them on the destination chain.
 
-**Programmable Token Transfer:** This feature lets developers send tokens along with additional data, enabling complex actions on the receiving chain without multiple steps.
+**Programmable Token Transfer:** A CCIP feature that allows tokens to be transferred along with additional data in a single transaction, enabling more complex interactions on the destination chain without requiring multiple transactions.
 
-**Smart Execution:** A feature where the Executing DON adjusts the gas settings to ensure transactions succeed even if network conditions change, such as during congestion.
+**Smart Execution:** A system within the Executing DON that dynamically adjusts gas prices to ensure transactions can be completed even in changing network conditions, such as during network congestion.
 
+**Lanes:** A lane is a specific, unidirectional pathway between a source and a destination blockchain. For example, Ethereum Mainnet to Polygon Mainnet is one lane, and Polygon Mainnet to Ethereum Mainnet is another. Lanes are critical to defining the path for a transaction within CCIP and ensuring that each cross-chain transfer follows a set route.
 
+**Curse Status:** This is a security measure that comes into play if malicious activity or a severe network issue is detected. When a transaction or batch is flagged as “Cursed,” it’s essentially blacklisted and prevented from being processed on the destination chain. The Curse status acts as a safety mechanism to protect users and networks from potential exploits or risks detected during the transfer process.
+
+**Arbitrary Messaging:** This feature of CCIP allows developers to send any kind of data (formatted as bytes) across chains. This makes it possible to execute complex interactions on the destination blockchain, beyond just transferring tokens.
+
+**Blessing:** This term refers to the approval process by the Risk Management Network. Once the Risk Management Network verifies that the Merkle Root is correct and free of issues, it “blesses” the root, meaning the transaction is safe to proceed on the destination chain. The blessing is a crucial step to ensure the data’s integrity across chains.
+
+**Rate Limiting:** A security measure applied within Token Pools to prevent large or rapid token transfers across chains. This helps protect against potential attacks, such as a large-scale draining of funds through compromised tokens.
+
+**Lane Prioritization:** CCIP can prioritize certain lanes based on network congestion, transaction importance, or other criteria. Lane prioritization helps ensure critical transactions are processed faster, even if there’s heavy traffic across the network.
 
