@@ -1,12 +1,12 @@
 # CCIP-Metis-101
 
 
-
 ### Simplified Explanation of CCIP’s Role
 
-Think of CCIP as a courier service for blockchain transactions. When you send a package (transaction), CCIP ensures it’s securely packed, tracked, and delivered across blockchains without getting lost or tampered with. Each component (Committing DON, Risk Management Network, Executing DON) acts as a checkpoint to confirm and secure the package until it reaches the recipient. This setup provides a reliable way to transfer tokens and data across different chains, opening up new possibilities for decentralized apps that need to interact beyond a single blockchain.
----
 
+**Think of CCIP as a courier service for blockchain transactions. When you send a package (transaction), CCIP ensures it’s securely packed, tracked, and delivered across blockchains without getting lost or tampered with. Each component (Committing DON, Risk Management Network, Executing DON) acts as a checkpoint to confirm and secure the package until it reaches the recipient. This setup provides a reliable way to transfer tokens and data across different chains, opening up new possibilities for decentralized apps that need to interact beyond a single blockchain.
+
+---
 ### How CCIP Works in a Nutshell
 
 1. **Starting a Cross-Chain Transaction:**
